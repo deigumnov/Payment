@@ -2,9 +2,11 @@ package Server;
 
 import Client.Client;
 import Common.Check;
-
+import Common.Error;
+import lombok.Getter;
 import java.util.ArrayList;
 
+@Getter
 public class Server {
     private int serverPort;
     private String protocol;
@@ -98,36 +100,24 @@ public class Server {
         return result;
     }
 
-    public int payForPhone (Client client, String accountNumber, double sum, String phoneNumber) {
-        // если функция возвращает нулевой результат, значит все прошло успешно
-        int result = 0;
+    public Error payForPhone (Client client, String accountNumber, double sum, String phoneNumber) {
         if (Check.checkPhone(phoneNumber) == null) {
-            // не пройдена проверка на корректность ввода номера телефона
-            result = -1;
-            return result;
+            return Error.IncorrectPhone;
         } else {
             phoneNumber = Check.checkPhone(phoneNumber);
         }
         if (!isPhoneExist(phoneNumber)) {
-        // номер телефона не найден
-            result = -2;
-            return result;
+            return Error.PhoneNotFound;
         }
         if (!isClientAccount(accountNumber,client)) {
-        // не найден счет у клиента
-            result = -3;
-            return result;
+            return Error.AccountNotFound;
         }
         sum = Check.checkSum(sum);
         if (sum == 0) {
-        // введена некорректная сумма
-            result = -4;
-            return result;
+            return Error.IncorrectSum;
         }
         if (getClientAccountBalance(accountNumber,client) < sum) {
-        // недостаточно средств для выполнения операции
-            result = -5;
-            return result;
+            return Error.InsufficientFond;
         }
 
         double accountBalanceStart = getClientAccountBalance(accountNumber,client);
@@ -138,9 +128,7 @@ public class Server {
             }
         }
         if (accountBalanceStart - getClientAccountBalance(accountNumber,client) != sum) {
-            // операция списания со счета не прошла
-            result = -6;
-            return result;
+            return Error.AccountOperationUnavailable;
         }
 
         // пока что курсы для конвертации валют 1:1
@@ -151,15 +139,9 @@ public class Server {
             }
         }
         if (getPhoneBalance(phoneNumber) - phoneBalanceStart != sum) {
-        // операция пополнения баланса телефона не прошла
-            result = -7;
-            return result;
+            return Error.PhoneOperationUnavailable;
         }
 
-        return result;
+        return Error.OK;
     }
-
-    public int getServerPort() { return serverPort; }
-    public String getIpAddress() { return ipAddress; }
-    public String getPROTOCOL() { return protocol; }
 }

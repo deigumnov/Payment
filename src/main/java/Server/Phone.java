@@ -1,5 +1,8 @@
 package Server;
 
+import lombok.Getter;
+
+@Getter
 public class Phone {
     private String phoneNumber;
     private double phoneBalance;
@@ -14,8 +17,4 @@ public class Phone {
     public void addBalance(double sum) {
         phoneBalance += sum;
     }
-
-    public String getPhoneNumber() { return phoneNumber; }
-    public double getPhoneBalance() { return phoneBalance; }
-    public Currency getCurrency() { return currency; }
 }

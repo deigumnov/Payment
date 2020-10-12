@@ -1,4 +1,5 @@
 import Client.Client;
+import Common.Error;
 import Server.Server;
 import Server.Account;
 
@@ -21,7 +22,6 @@ public class Main {
         Server server = new Server(50_001, "TCP", "127.0.0.1");
         TimeUnit.SECONDS.sleep(1);
 
-
         System.out.println("Выполняется запрос счетов с балансом с сервера для клиента с номером договора " + client.getContractID());
         ArrayList<Account> accounts = server.getClientAccounts(client);
         TimeUnit.SECONDS.sleep(1);
@@ -43,35 +43,8 @@ public class Main {
         TimeUnit.SECONDS.sleep(1);
 
         System.out.println("Выполнение операции..");
-        int payResult = server.payForPhone(client,accountNumber,sum,phone);
-        switch (payResult) {
-            case 0 :
-                System.out.println("Операция прошла успешно");
-                break;
-            case -1 :
-                System.out.println("Не пройдена проверка на корректность ввода номера телефона");
-                break;
-            case -2 :
-                System.out.println("Номер телефона не найден");
-                break;
-            case -3 :
-                System.out.println("Счет списания не найден у клиента");
-                break;
-            case -4 :
-                System.out.println("Введена некорректная сумма");
-                break;
-            case -5 :
-                System.out.println("Недостаточно средств для выполнения операции");
-                break;
-            case -6 :
-                System.out.println("Операция списания со счета не прошла");
-                break;
-            case -7 :
-                System.out.println("Операция пополнения баланса телефона не прошла");
-                break;
-            default :
-                System.out.println("Неизвестная ошибка");
-        }
+        Error payResult = server.payForPhone(client,accountNumber,sum,phone);
+        System.out.println(payResult);
 
         System.out.println("У клиента найдено " + accounts.size() + " счетов");
         for (Account account : accounts) {
