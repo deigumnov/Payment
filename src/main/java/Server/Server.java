@@ -31,8 +31,8 @@ public class Server {
     }
 
     private void initializePhones () {
-        phones= new ArrayList<>();
-        phones.add(new Phone("1234567890",0.0));
+        phones = new ArrayList<>();
+        phones.add(new Phone("1234567890",0.0,Currency.RUB));
     }
 
     public double getClientAccountBalance(String accountNumber, Client client) {
