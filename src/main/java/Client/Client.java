@@ -1,11 +1,9 @@
 package Client;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
 public class Client {
-    private long contractID;
-
-    public Client (long contractID) {
-        this.contractID = contractID;
-    }
-
-    public long getContractID () { return this.contractID; }
+    @Getter private long contractID;
 }
