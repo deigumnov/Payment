@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
+@Getter
+
 public class Client {
-    @Getter private long contractID;
+    private long contractID;
 }

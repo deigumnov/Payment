@@ -3,8 +3,9 @@ package Server;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
+@Getter
+
 public class Account {
     private String accountNumber;
     private double accountBalance;

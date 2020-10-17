@@ -2,11 +2,12 @@ package Server;
 
 import Client.Client;
 import Common.Check;
-import Common.Error;
+import Common.PayResult;
 import lombok.Getter;
 import java.util.ArrayList;
 
 @Getter
+
 public class Server {
     private int serverPort;
     private String protocol;
@@ -100,24 +101,24 @@ public class Server {
         return result;
     }
 
-    public Error payForPhone (Client client, String accountNumber, double sum, String phoneNumber) {
+    public PayResult payForPhone (Client client, String accountNumber, double sum, String phoneNumber) {
         if (Check.checkPhone(phoneNumber) == null) {
-            return Error.IncorrectPhone;
+            return PayResult.IncorrectPhone;
         } else {
             phoneNumber = Check.checkPhone(phoneNumber);
         }
         if (!isPhoneExist(phoneNumber)) {
-            return Error.PhoneNotFound;
+            return PayResult.PhoneNotFound;
         }
         if (!isClientAccount(accountNumber,client)) {
-            return Error.AccountNotFound;
+            return PayResult.AccountNotFound;
         }
         sum = Check.checkSum(sum);
         if (sum == 0) {
-            return Error.IncorrectSum;
+            return PayResult.IncorrectSum;
         }
         if (getClientAccountBalance(accountNumber,client) < sum) {
-            return Error.InsufficientFond;
+            return PayResult.InsufficientFond;
         }
 
         double accountBalanceStart = getClientAccountBalance(accountNumber,client);
@@ -128,7 +129,7 @@ public class Server {
             }
         }
         if (accountBalanceStart - getClientAccountBalance(accountNumber,client) != sum) {
-            return Error.AccountOperationUnavailable;
+            return PayResult.AccountOperationUnavailable;
         }
 
         // пока что курсы для конвертации валют 1:1
@@ -139,9 +140,9 @@ public class Server {
             }
         }
         if (getPhoneBalance(phoneNumber) - phoneBalanceStart != sum) {
-            return Error.PhoneOperationUnavailable;
+            return PayResult.PhoneOperationUnavailable;
         }
 
-        return Error.OK;
+        return PayResult.OK;
     }
 }

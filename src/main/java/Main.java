@@ -1,8 +1,7 @@
 import Client.Client;
-import Common.Error;
+import Common.PayResult;
 import Server.Server;
 import Server.Account;
-
 import java.util.ArrayList;
 
 public class Main {
@@ -31,7 +30,7 @@ public class Main {
         System.out.println("Курс конвертации валюты 1:1");
 
         System.out.println("Выполнение операции..");
-        Error payResult = server.payForPhone(client,accountNumber,sum,phone);
+        PayResult payResult = server.payForPhone(client,accountNumber,sum,phone);
         System.out.println(payResult);
 
         System.out.println("У клиента найдено " + accounts.size() + " счетов");
