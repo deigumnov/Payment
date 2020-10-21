@@ -20,7 +20,7 @@ public class Main {
             System.out.println("Счет: " + account.getAccountNumber() + ", Валюта: " + account.getCurrency() + ", Баланс: " + account.getAccountBalance());
         }
 
-        String phone = "81234567890";
+        String phone = "+81234567890";
         if (server.getDatabase().getPhoneBalance(phone).isPresent()) {
             System.out.println("Текущий баланс по номеру телефона : " + server.getDatabase().getPhoneBalance(phone).get());
             String accountNumber = "00001";

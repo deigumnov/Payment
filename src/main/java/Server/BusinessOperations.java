@@ -17,6 +17,7 @@ public class BusinessOperations {
         // создание базы телефонов
         phones = new HashSet<>();
         phones.add(new Phone("81234567890",0.0,Currency.RUB));
+        phones.add(new Phone("+81234567890",0.0,Currency.RUB));
     }
 
     public Optional<Double> getClientAccountBalance(String accountNumber, Client client) {
@@ -86,9 +87,10 @@ public class BusinessOperations {
     }
 
     public PayResult payForPhone (Client client, String accountNumber, double sum, String phoneNumber) {
-        if (!CheckPhone.checkPhone(phoneNumber)) {
+        if ((!CheckPhone.checkPhone(phoneNumber)) && (!CheckPhone.checkPhone2(phoneNumber))) {
             return PayResult.IncorrectPhone;
         }
+
         if (!isPhoneExist(phoneNumber)) {
             return PayResult.PhoneNotFound;
         }
