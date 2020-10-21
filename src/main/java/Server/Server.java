@@ -33,7 +33,7 @@ public class Server {
 
     private void initializePhones () {
         phones = new ArrayList<>();
-        phones.add(new Phone("1234567890",0.0,Currency.RUB));
+        phones.add(new Phone("81234567890",0.0,Currency.RUB));
     }
 
     public double getClientAccountBalance(String accountNumber, Client client) {
@@ -102,10 +102,8 @@ public class Server {
     }
 
     public PayResult payForPhone (Client client, String accountNumber, double sum, String phoneNumber) {
-        if (Check.checkPhone(phoneNumber) == null) {
+        if (!Check.checkPhone(phoneNumber)) {
             return PayResult.IncorrectPhone;
-        } else {
-            phoneNumber = Check.checkPhone(phoneNumber);
         }
         if (!isPhoneExist(phoneNumber)) {
             return PayResult.PhoneNotFound;
@@ -113,8 +111,7 @@ public class Server {
         if (!isClientAccount(accountNumber,client)) {
             return PayResult.AccountNotFound;
         }
-        sum = Check.checkSum(sum);
-        if (sum == 0) {
+        if (!Check.checkSum(sum)) {
             return PayResult.IncorrectSum;
         }
         if (getClientAccountBalance(accountNumber,client) < sum) {

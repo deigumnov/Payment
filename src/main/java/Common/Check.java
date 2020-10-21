@@ -1,25 +1,29 @@
 package Common;
 
 public class Check {
-
-    // проверка корректности ввода номера телефона : ожидается ввод в формате 8(XXX)XXXX-XX-XX
+    // проверка корректности ввода номера телефона : ожидается ввод в формате X(XXX)XXXX-XX-XX
     // необходимо вводить только цифры вместо символов X
-    // все символы кроме цифр из строки удаляются..
-    // далее если длина строки не равна 10 возвращается пустое значение
-    public static String checkPhone(String phone) {
-        String result = phone.replaceAll("[^0-9]", "");
-        if (result.length() != 10) {
-            result = null; // бизнес ошибка - телефон введен некорректно
+    // ввод дополнительных символов кроме X считается некорректным, первый символ должен быть равен 8
+    public static boolean checkPhone(String phone) {
+        boolean result = true;
+        if (!phone.startsWith("8")) {
+            result = false;
+        }
+        if (phone.length() != 11) {
+            result = false;
         }
         return result;
     }
 
     // проверка на наличие не отрицательной суммы со значением до двух знаков
-    // в противном случае возвращается ноль
-    public static double checkSum(double sum) {
-        double result = Math.max(sum, 0.0);
-        result = Math.round(result*100);
-        result = result/100;
+    public static boolean checkSum(double sum) {
+        boolean result = true;
+        if (sum <= 0.0) {
+            result = false;
+        }
+        if (Math.round(sum*100)/100.0 != sum) {
+            result = false;
+        }
         return result;
     }
 }
