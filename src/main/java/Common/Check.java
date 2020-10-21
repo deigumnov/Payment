@@ -4,8 +4,9 @@ public class Check {
     // проверка корректности ввода номера телефона : ожидается ввод в формате X(XXX) XXXX-XX-XX
     // необходимо вводить только цифры вместо символов X
     // ввод дополнительных символов кроме X считается некорректным, первый символ должен быть равен 8
-    public static boolean checkPhone(String phone) {
+    public static <T> boolean checkPhone(T inputPhone) {
         boolean result = true;
+        String phone = inputPhone.toString();
         if (!phone.startsWith("8")) {
             result = false;
         }
