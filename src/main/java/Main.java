@@ -2,7 +2,7 @@ import Client.Client;
 import Common.PayResult;
 import Server.Server;
 import Server.Account;
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,7 +14,7 @@ public class Main {
         Server server = new Server(50_001, "TCP", "127.0.0.1");
 
         System.out.println("Выполняется запрос счетов с балансом с сервера для клиента с номером договора " + client.getContractID());
-        ArrayList<Account> accounts = server.getClientAccounts(client);
+        HashSet<Account> accounts = server.getDatabase().getClientAccounts(client);
 
         System.out.println("У клиента найдено " + accounts.size() + " счетов");
         for (Account account : accounts) {
@@ -22,21 +22,29 @@ public class Main {
         }
 
         String phone = "81234567890";
-        System.out.println("Текущий баланс по номеру телефона : " + server.getPhoneBalance(phone));
+        if (server.getDatabase().getPhoneBalance(phone).isPresent()) {
+            System.out.println("Текущий баланс по номеру телефона : " + server.getDatabase().getPhoneBalance(phone).get());
+            String accountNumber = "00001";
+            double sum = 50.0;
+            System.out.println("Клиент выбрал операцию пополнение баланса по номеру телефона " + phone + " со счета " + accountNumber + " на сумму " + sum + " в валюте счета списания");
+            System.out.println("Курс конвертации валюты 1:1");
 
-        String accountNumber = "00001";
-        double sum = 50.0;
-        System.out.println("Клиент выбрал операцию пополнение баланса по номеру телефона " + phone + " со счета " + accountNumber + " на сумму " + sum + " в валюте счета списания");
-        System.out.println("Курс конвертации валюты 1:1");
+            System.out.println("Выполнение операции..");
+            PayResult payResult = server.getDatabase().payForPhone(client,accountNumber,sum,phone);
+            System.out.println(payResult);
 
-        System.out.println("Выполнение операции..");
-        PayResult payResult = server.payForPhone(client,accountNumber,sum,phone);
-        System.out.println(payResult);
-
-        System.out.println("У клиента найдено " + accounts.size() + " счетов");
-        for (Account account : accounts) {
-            System.out.println("Счет: " + account.getAccountNumber() + ", Валюта: " + account.getCurrency() + ", Баланс: " + account.getAccountBalance());
+            System.out.println("У клиента найдено " + accounts.size() + " счетов");
+            for (Account account : accounts) {
+                System.out.println("Счет: " + account.getAccountNumber() + ", Валюта: " + account.getCurrency() + ", Баланс: " + account.getAccountBalance());
+            }
+            if (server.getDatabase().getPhoneBalance(phone).isPresent()) {
+                System.out.println("Текущий баланс по номеру телефона : " + server.getDatabase().getPhoneBalance(phone).get());
+            } else {
+                System.out.println("Указанный телефон не найден : " + phone);
+            }
+        } else {
+            System.out.println("Указанный телефон не найден : " + phone);
         }
-        System.out.println("Текущий баланс по номеру телефона : " + server.getPhoneBalance(phone));
+
     }
 }

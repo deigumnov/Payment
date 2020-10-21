@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 
 public class Account {
-    private String accountNumber;
+    private final String accountNumber;
     private double accountBalance;
-    private long clientContractID;
-    private Currency currency;
+    private final long clientContractID;
+    private final Currency currency;
 
     public void changeBalance (double sum) {
         accountBalance += sum;

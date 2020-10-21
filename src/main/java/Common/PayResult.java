@@ -16,5 +16,5 @@ public enum PayResult {
     AccountOperationUnavailable(-6),
     PhoneOperationUnavailable(-7);
 
-    private int errorCode;
+    private final int errorCode;
 }

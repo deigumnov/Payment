@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 
 public class Client {
-    private long contractID;
+    private final long contractID;
 }
