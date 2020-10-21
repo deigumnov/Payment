@@ -1,10 +1,9 @@
 package Server;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
-@Getter
 @AllArgsConstructor
+@Getter
 
 public class Server {
     private final int serverPort;

@@ -1,7 +1,6 @@
-import Client.Client;
-import Common.PayResult;
-import Server.Server;
-import Server.Account;
+import Client.*;
+import Common.*;
+import Server.*;
 import java.util.HashSet;
 
 public class Main {
@@ -25,7 +24,7 @@ public class Main {
         if (server.getDatabase().getPhoneBalance(phone).isPresent()) {
             System.out.println("Текущий баланс по номеру телефона : " + server.getDatabase().getPhoneBalance(phone).get());
             String accountNumber = "00001";
-            double sum = 50.0;
+            double sum = 50.01;
             System.out.println("Клиент выбрал операцию пополнение баланса по номеру телефона " + phone + " со счета " + accountNumber + " на сумму " + sum + " в валюте счета списания");
             System.out.println("Курс конвертации валюты 1:1");
 

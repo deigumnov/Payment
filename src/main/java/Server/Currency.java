@@ -1,7 +1,6 @@
 package Server;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
 
 @AllArgsConstructor
 @Getter

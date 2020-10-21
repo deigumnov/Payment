@@ -1,11 +1,9 @@
 package Server;
 
-import Client.Client;
-import Common.Check;
-import Common.PayResult;
+import Client.*;
+import Common.*;
 
-import java.util.HashSet;
-import java.util.Optional;
+import java.util.*;
 
 public class BusinessOperations {
     private final HashSet<Account> accounts;
