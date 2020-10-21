@@ -36,23 +36,6 @@ public class BusinessOperations {
         }
     }
 
-//    public Optional getClientAccountCurrency(String accountNumber, Client client) {
-//        Currency currency = Currency.RUB;
-//        boolean isFound = false;
-//        for (Account account : accounts) {
-//            if ((account.getClientContractID() == client.getContractID()) && (account.getAccountNumber().equals(accountNumber))) {
-//                currency = account.getCurrency();
-//                isFound = true;
-//                break;
-//            }
-//        }
-//        if (!isFound) {
-//            return Optional.ofNullable(null);
-//        } else {
-//            Optional.ofNullable(currency);
-//        }
-//    }
-
     public boolean isClientAccount(String accountNumber, Client client) {
         boolean result = false;
         for (Account account : accounts) {
@@ -90,10 +73,6 @@ public class BusinessOperations {
         } else {
             return Optional.of(balance);
         }
-//        if (phones.stream().filter(phones -> phones.equals(phoneNumber)).count() > 1) {
-//            return Optional.empty();
-//        }
-//        return Optional.ofNullable(phones).stream().findFirst(phones -> phones.equals(phoneNumber));
     }
 
     public HashSet<Account> getClientAccounts (Client client) {
@@ -107,7 +86,7 @@ public class BusinessOperations {
     }
 
     public PayResult payForPhone (Client client, String accountNumber, double sum, String phoneNumber) {
-        if (!Check.checkPhone(phoneNumber)) {
+        if (!CheckPhone.checkPhone(phoneNumber)) {
             return PayResult.IncorrectPhone;
         }
         if (!isPhoneExist(phoneNumber)) {
@@ -116,7 +95,7 @@ public class BusinessOperations {
         if (!isClientAccount(accountNumber,client)) {
             return PayResult.AccountNotFound;
         }
-        if (!Check.checkSum(sum)) {
+        if (!new CheckSum().test(sum)) {
             return PayResult.IncorrectSum;
         }
 
