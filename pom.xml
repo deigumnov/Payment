@@ -6,7 +6,7 @@
 
 <groupId>groupId</groupId>
 
-<artifactId>payment20200730</artifactId>
+<artifactId>payment</artifactId>
 <version>1.0-SNAPSHOT</version>
 <properties>
     <java.version>1.8</java.version>
