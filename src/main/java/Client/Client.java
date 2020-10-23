@@ -2,9 +2,11 @@ package Client;
 
 import lombok.*;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 
-public class Client {
-    private final long contractID;
+public class Client implements java.io.Serializable {
+    private long contractID;
 }
